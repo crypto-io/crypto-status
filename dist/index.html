@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+  </head>
+  <body>
+    <style>
+      body {
+        margin: 0;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-around;
+      }
+      .status-item {
+        display: flex;
+        flex-direction: column;
+        min-width: 230px;
+        min-height: 275px;
+        padding: 6px 12px;
+        background-blend-mode: overlay;
+      }
+      .flex {
+        flex: 1;
+      }
+      h2, h4 {
+        margin: 0;
+        padding: 6px 10px 16px 0;
+      }
+      .row {
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+      }
+      .color0 {
+        background: #eee;
+      }
+    </style>
+    <script>
+      const watchSet = [
+    [
+        "crypto-io-ipfs-node",
+        {
+            "name": "crypto-io-ipfs-node",
+            "html_url": "https://github.com/crypto-io/crypto-io-ipfs-node",
+            "updated_at": "2017-11-15T22:13:33Z",
+            "homepage": null,
+            "language": null,
+            "open_issues": 0,
+            "full_name": "crypto-io/crypto-io-ipfs-node"
+        }
+    ],
+    [
+        "crypto-io-pipe-node",
+        {
+            "name": "crypto-io-pipe-node",
+            "html_url": "https://github.com/crypto-io/crypto-io-pipe-node",
+            "updated_at": "2017-11-15T22:15:13Z",
+            "homepage": null,
+            "language": null,
+            "open_issues": 0,
+            "full_name": "crypto-io/crypto-io-pipe-node"
+        }
+    ],
+    [
+        "crypto-logger",
+        {
+            "name": "crypto-logger",
+            "html_url": "https://github.com/crypto-io/crypto-logger",
+            "updated_at": "2017-12-09T17:46:39Z",
+            "homepage": null,
+            "language": "JavaScript",
+            "open_issues": 0,
+            "full_name": "crypto-io/crypto-logger"
+        }
+    ],
+    [
+        "crypto-utils",
+        {
+            "name": "crypto-utils",
+            "html_url": "https://github.com/crypto-io/crypto-utils",
+            "updated_at": "2017-12-15T18:05:25Z",
+            "homepage": null,
+            "language": "JavaScript",
+            "open_issues": 1,
+            "full_name": "crypto-io/crypto-utils",
+            "issues": [
+                {
+                    "title": "Add unlock & lock methods",
+                    "html_url": "https://github.com/crypto-io/crypto-utils/issues/1",
+                    "number": 1,
+                    "state": "open"
+                }
+            ]
+        }
+    ],
+    [
+        "crypto-daemon",
+        {
+            "name": "crypto-daemon",
+            "html_url": "https://github.com/crypto-io/crypto-daemon",
+            "updated_at": "2017-12-10T02:55:14Z",
+            "homepage": null,
+            "language": "JavaScript",
+            "open_issues": 0,
+            "full_name": "crypto-io/crypto-daemon"
+        }
+    ],
+    [
+        "crypto-checkpoints",
+        {
+            "name": "crypto-checkpoints",
+            "html_url": "https://github.com/crypto-io/crypto-checkpoints",
+            "updated_at": "2017-12-16T19:09:38Z",
+            "homepage": null,
+            "language": "JavaScript",
+            "open_issues": 0,
+            "full_name": "crypto-io/crypto-checkpoints"
+        }
+    ],
+    [
+        "checkpoints",
+        {
+            "name": "checkpoints",
+            "html_url": "https://github.com/crypto-io/checkpoints",
+            "updated_at": "2017-12-16T18:54:20Z",
+            "homepage": null,
+            "language": null,
+            "open_issues": 1,
+            "full_name": "crypto-io/checkpoints"
+        }
+    ],
+    [
+        "crypto-ecdh",
+        {
+            "name": "crypto-ecdh",
+            "html_url": "https://github.com/crypto-io/crypto-ecdh",
+            "updated_at": "2018-01-01T01:04:14Z",
+            "homepage": null,
+            "language": "JavaScript",
+            "open_issues": 0,
+            "full_name": "crypto-io/crypto-ecdh"
+        }
+    ],
+    [
+        "crypto-ipfs-node",
+        {
+            "name": "crypto-ipfs-node",
+            "html_url": "https://github.com/crypto-io/crypto-ipfs-node",
+            "updated_at": "2018-01-07T22:27:28Z",
+            "homepage": null,
+            "language": "JavaScript",
+            "open_issues": 0,
+            "full_name": "crypto-io/crypto-ipfs-node"
+        }
+    ],
+    [
+        "crypto-io-api",
+        {
+            "name": "crypto-io-api",
+            "html_url": "https://github.com/crypto-io/crypto-io-api",
+            "updated_at": "2018-01-07T23:38:35Z",
+            "homepage": null,
+            "language": "JavaScript",
+            "open_issues": 0,
+            "full_name": "crypto-io/crypto-io-api"
+        }
+    ],
+    [
+        "crypto-store",
+        {
+            "name": "crypto-store",
+            "html_url": "https://github.com/crypto-io/crypto-store",
+            "updated_at": "2018-01-13T18:22:20Z",
+            "homepage": null,
+            "language": "JavaScript",
+            "open_issues": 0,
+            "full_name": "crypto-io/crypto-store"
+        }
+    ]
+];
+
+      const shieldsURL = (
+        repoURL = null,
+        target = 'travis',
+        branch = 'master',
+        style = 'for-the-badge'
+      ) => {
+        return `https://img.shields.io/${target}/${repoURL}/${branch}.svg?style=${style}`
+      }
+
+      let count = 0;
+      for (const item of watchSet) {
+        const value = item[1];
+        value.travisURL = value.html_url.replace('github.com', 'travis-ci.org')
+        const span = document.createElement('span');
+
+        span.innerHTML = `
+          <header><h2>${value.name}</h2></header>
+          <a href=${value.travisURL}>
+            <img src=${shieldsURL(value.full_name, 'travis')}></img>
+          </a>
+          <p></p>
+          <span class="row"><h4>open issues</h4>${value.open_issues}</span>
+          ${value.issues ? `
+            ${value.issues.map(issue => `
+              <li>
+                <a href=${issue.html_url}><h4>${issue.title}</h4></a>
+              </li>
+            `)}` : ''}
+          <p></p>
+          <a href=${value.html_url}>repository</a>
+          <p></p>
+          ${value.homepage ? `<a href=${value.homepage}>homepage</a>` : ''}
+          <span class="flex"></span>
+          <small><strong>Last updated: </strong>${value.updated_at}</small>
+        `;
+        if (count % 2 == 0) span.classList.add('color0');
+        span.classList.add('status-item')
+        count++;
+        document.body.appendChild(span);
+      }
+    </script>
+  </body>
+</html>

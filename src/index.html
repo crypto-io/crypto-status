@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+  </head>
+  <body>
+    <style>
+      body {
+        margin: 0;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-around;
+      }
+      .status-item {
+        display: flex;
+        flex-direction: column;
+        min-width: 230px;
+        min-height: 275px;
+        padding: 6px 12px;
+        background-blend-mode: overlay;
+      }
+      .flex {
+        flex: 1;
+      }
+      h2, h4 {
+        margin: 0;
+        padding: 6px 10px 16px 0;
+      }
+      .row {
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+      }
+      .color0 {
+        background: #eee;
+      }
+    </style>
+    <script>
+      const watchSet = [];
+
+      const shieldsURL = (
+        repoURL = null,
+        target = 'travis',
+        branch = 'master',
+        style = 'for-the-badge'
+      ) => {
+        return `https://img.shields.io/${target}/${repoURL}/${branch}.svg?style=${style}`
+      }
+
+      let count = 0;
+      for (const item of watchSet) {
+        const value = item[1];
+        value.travisURL = value.html_url.replace('github.com', 'travis-ci.org')
+        const span = document.createElement('span');
+
+        span.innerHTML = `
+          <header><h2>${value.name}</h2></header>
+          <a href=${value.travisURL}>
+            <img src=${shieldsURL(value.full_name, 'travis')}></img>
+          </a>
+          <p></p>
+          <span class="row"><h4>open issues</h4>${value.open_issues}</span>
+          ${value.issues ? `
+            ${value.issues.map(issue => `
+              <li>
+                <a href=${issue.html_url}><h4>${issue.title}</h4></a>
+              </li>
+            `)}` : ''}
+          <p></p>
+          <a href=${value.html_url}>repository</a>
+          <p></p>
+          ${value.homepage ? `<a href=${value.homepage}>homepage</a>` : ''}
+          <span class="flex"></span>
+          <small><strong>Last updated: </strong>${value.updated_at}</small>
+        `;
+        if (count % 2 == 0) span.classList.add('color0');
+        span.classList.add('status-item')
+        count++;
+        document.body.appendChild(span);
+      }
+    </script>
+  </body>
+</html>
